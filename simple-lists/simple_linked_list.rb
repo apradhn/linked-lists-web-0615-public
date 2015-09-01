@@ -39,7 +39,6 @@ class Element
   end
 
   def reverse
-    reversed_array = self.to_a.reverse
-    Element.from_a(reversed_array)
+    Element.from_a(self.to_a.reverse)
   end
 end
