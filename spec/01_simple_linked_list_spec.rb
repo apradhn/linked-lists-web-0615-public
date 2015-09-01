@@ -1,4 +1,3 @@
-require 'pry'
 describe 'Simple Singly-Linked Lists' do
   let(:one) { Element.new(1, nil) }
   let(:two) { Element.new(2, one) }
