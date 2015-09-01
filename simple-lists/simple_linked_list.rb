@@ -1,11 +1,25 @@
 require "pry"
 
 class Element
-  attr_accessor :datum, :next
+  attr_accessor :datum
+  attr_reader :next, :previous
 
   def initialize(datum, tail)
     @datum = datum
     @next = tail
+    if tail
+      tail.previous = self
+    end
+  end
+
+  def next=(element)
+    @next = element
+    element.instance_variable_set(:@previous, self)
+  end
+
+  def previous=(element)
+    @previous = element
+    element.instance_variable_set(:@next, self)
   end
 
   def to_a

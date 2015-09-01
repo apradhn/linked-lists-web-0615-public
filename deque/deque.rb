@@ -7,43 +7,46 @@ class Deque
     @list = nil
   end
 
-  def push(datum)
-    if list.nil?
-      self.list = Element.new(datum, nil)
-    elsif list.datum && list.next.nil?
-      list.next = Element.new(datum, nil)
-    elsif list.datum && list.next
-      list.next.next = Element.new(datum, nil)
+  def push(number)
+    if @list.nil?
+      @list = Element.new(number, nil)
+    else
+      if @list.next
+        next_element = @list.next
+        while next_element.next
+          next_element = next_element.next
+        end
+        next_element.next = Element.new(number, nil)
+      else
+        @list.next = Element.new(number, nil)
+      end
     end
   end
 
   def pop
-    if list.next.nil?
-      popped_value = list.datum
+    element = @list
+    if @list.next.nil?
+      last_value = @list.datum
+      @list = nil
+      last_value
     else
-      popped_value = list.next.datum
+      last_value = @list.next.datum
+      @list = Element.new(@list.datum, nil)
+      last_value
     end
-    self.list = Element.new(list.datum, nil)
-    popped_value    
   end
 
   def shift
-    shifted_value = list.datum
-    if list.next.nil?
-      self.list = nil
-    elsif list.next.next.nil?
-      self.list = Element.new(self.list.next.datum, nil)
+    first_value = @list.datum
+    if @list.next
+      @list = Element.new(@list.next.datum, @list.next.next)
     else
-      self.list = Element.new(self.list.next.datum, self.list.next.next)
+      @list = nil
     end
-    shifted_value
+    first_value
   end
 
-  def unshift(datum)
-    if list.nil?
-      self.list = Element.new(datum, nil)
-    else 
-      self.list = Element.new(datum, Element.new(list.datum, list.next))
-    end
+  def unshift(number)
+    @list = Element.new(number, @list)
   end
 end
