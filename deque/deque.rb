@@ -8,37 +8,21 @@ class Deque
   end
 
   def push(number)
-    if @list.nil?
-      @list = Element.new(number, nil)
-    else
-      if @list.next
-        next_element = @list.next
-        while next_element.next
-          next_element = next_element.next
-        end
-        next_element.next = Element.new(number, nil)
-      else
-        @list.next = Element.new(number, nil)
-      end
-    end
+    array = Element.to_a(@list)
+    array << number
+    @list = Element.from_a(array)
   end
 
   def pop
-    element = @list
-    if @list.next.nil?
-      last_value = @list.datum
-      @list = nil
-      last_value
-    else
-      last_value = @list.next.datum
-      @list = Element.new(@list.datum, nil)
-      last_value
-    end
+    array = Element.to_a(@list)
+    last_value = array[-1]
+    @list = Element.from_a(array[0...-1])
+    last_value
   end
 
   def shift
     first_value = @list.datum
-    @list.next ? @list = Element.new(@list.next.datum, @list.next.next) : @list = nil
+    @list = Element.from_a(Element.to_a(@list)[1..-1])
     first_value
   end
 
