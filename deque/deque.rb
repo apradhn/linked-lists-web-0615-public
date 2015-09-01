@@ -38,11 +38,7 @@ class Deque
 
   def shift
     first_value = @list.datum
-    if @list.next
-      @list = Element.new(@list.next.datum, @list.next.next)
-    else
-      @list = nil
-    end
+    @list.next ? @list = Element.new(@list.next.datum, @list.next.next) : @list = nil
     first_value
   end
 
